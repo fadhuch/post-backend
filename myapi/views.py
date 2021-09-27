@@ -36,7 +36,7 @@ def user_list(self, request, format=None):
 @api_view(['GET'])
 @renderer_classes((JSONRenderer,))
 def posts(request):
-    instances = Post.objects.all().order_by("-creation_time")
+    instances = Post.objects.all().order_by("-id")
     serialized = PostSerializer(instances,many=True,context={"request":request})
     
     response_data = {
