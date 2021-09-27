@@ -8,21 +8,21 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from myapi.serializers import PostSerializer,CommentSerializer
 from rest_framework import status
 from django.contrib.auth.models import User
-from .serializers import UserSerializer, UserSerializerWithToken
+# from .serializers import UserSerializer, UserSerializerWithToken
 from rest_framework.views import APIView
 
 
-@api_view(['GET'])
-def current_user(request):
-    """
-    Determine the current user by their token, and return their data
-    """
+# @api_view(['GET'])
+# def current_user(request):
+#     """
+#     Determine the current user by their token, and return their data
+#     """
     
-    serializer = UserSerializer(request.user)
-    return Response(serializer.data)
+#     serializer = UserSerializer(request.user)
+#     return Response(serializer.data)
 
 
-@permission_classes((IsAuthenticated,))
+# @permission_classes((IsAuthenticated,))
 @api_view(['GET'])
 def user_list(self, request, format=None):
     serializer = UserSerializerWithToken(data=request.data)
@@ -35,9 +35,8 @@ def user_list(self, request, format=None):
 
 @api_view(['GET'])
 @renderer_classes((JSONRenderer,))
-@permission_classes((IsAuthenticated,))
 def posts(request):
-    instances = Post.objects.all().order_by("-id")
+    instances = Post.objects.all().order_by("-creation_time")
     serialized = PostSerializer(instances,many=True,context={"request":request})
     
     response_data = {
@@ -51,7 +50,7 @@ def posts(request):
 
 @api_view(['POST'])
 @renderer_classes((JSONRenderer,))
-@permission_classes((IsAuthenticated,))
+# @permission_classes((IsAuthenticated,))
 def new_posts(request):
     serializer = PostSerializer(data=request.data,context={"request":request})
     if serializer.is_valid():
@@ -63,7 +62,7 @@ def new_posts(request):
 
 @api_view(['GET'])
 @renderer_classes((JSONRenderer,))
-@permission_classes((IsAuthenticated,))
+# @permission_classes((IsAuthenticated,))
 def comments(request):
     instances = Comment.objects.all().order_by("id")
     serialized = CommentSerializer(instances,many=True,context={"request":request})
@@ -79,7 +78,7 @@ def comments(request):
 
 @api_view(['POST'])
 @renderer_classes((JSONRenderer,))
-@permission_classes((IsAuthenticated,))
+# @permission_classes((IsAuthenticated,))
 def new_comments(request):
     serializer = CommentSerializer(data=request.data,context={"request":request})
     if serializer.is_valid():
