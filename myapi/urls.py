@@ -11,7 +11,7 @@ urlpatterns = [
     path('new/', views.new_posts, name='new_posts'),
     path('comments/', views.comments, name='comments'),
     path('new-comments/', views.new_comments, name='new_comments'),
-    path('current_user/', views.current_user, name='current_user'),
-    path('users/', views.user_list, name='user_list'),
+    # path('current_user/', views.current_user, name='current_user'),
+    # path('users/', views.user_list, name='user_list'),
     
 ]
